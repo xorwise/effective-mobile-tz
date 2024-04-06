@@ -9,6 +9,11 @@ paths:
     get:
       summary: Get cars list by parameters
       parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
         - name: reg-num
           in: query
           required: false
