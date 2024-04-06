@@ -1,0 +1,195 @@
+openapi: 3.0.3
+info:
+  title: Car catalog
+  version: 0.0.1
+servers:
+  - url: http://127.0.0.1:8080
+paths:
+  /cars:
+    get:
+      summary: Get cars list by parameters
+      parameters:
+        - name: reg-num
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: mark
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: model
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: year
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: owner-name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: owner-surname
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: owner-patronymic
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+    post:
+      summary: Add a new car
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCars'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /cars/{regNum}:
+    put:
+      summary: Update car by regNum
+      parameters:
+        - name: regNum
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCar'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+    delete:
+      summary: Delete car by regNum
+      parameters:
+        - name: regNum
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    Car:
+      required:
+        - reg_num
+        - mark
+        - model
+        - year
+        - owner_name
+        - owner_surname
+        - owner_patronymic
+      properties:
+        reg_num:
+          type: string
+          example: A123AA123
+        mark:
+          type: string
+          example: Ford
+        model:
+          type: string
+          example: Focus
+        year:
+          type: integer
+          example: 2020
+        owner_name:
+          type: string
+          example: John
+        owner_surname:
+          type: string
+          example: Smith
+        owner_patronymic:
+          type: string
+          example: Ivanovich
+    NewCars:
+      required:
+        - regNums
+      properties:
+        regNums:
+          type: array
+          items:
+            type: string
+          example: ["A123AA123", "B456BB456"]
+    UpdateCar:
+      required:
+        - mark
+        - model
+        - year
+        - owner_name
+        - owner_surname
+        - owner_patronymic
+      properties:
+        mark:
+          type: string
+          example: Ford
+        model:
+          type: string
+          example: Focus
+        year:
+          type: integer
+          example: 2020
+        owner_name:
+          type: string
+          example: John
+        owner_surname:
+          type: string
+          example: Smith
+        owner_patronymic:
+          type: string
+          example: Ivanovich
+
