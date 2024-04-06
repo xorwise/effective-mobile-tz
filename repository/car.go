@@ -20,6 +20,7 @@ func NewCarRepository(conn *pgx.Conn, ctx context.Context, logger *slog.Logger) 
 	return &carRepository{conn, ctx, logger}
 }
 
+// Creates query with arguments, prevents sql injections
 func buildListQuery(args map[string]any, limit int, offset int) (string, []any) {
 	query := "SELECT * FROM cars WHERE 1=1"
 	new_args := []any{}
@@ -127,7 +128,6 @@ func (cr *carRepository) Update(regNum string, updateRequest domain.UpdateCarReq
 }
 
 func (cr *carRepository) Create(car *domain.Car) error {
-
 	_, err := cr.conn.Exec(
 		cr.ctx,
 		"INSERT INTO cars (reg_num, mark, model, year, owner_name, owner_surname, owner_patronymic) VALUES ($1, $2, $3, $4, $5, $6, $7)",

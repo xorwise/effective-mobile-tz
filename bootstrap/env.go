@@ -18,6 +18,7 @@ type Env struct {
 	PostgresPort     string
 	LogLevel         slog.Level
 	ListLimit        int
+	RequestTimeout   int
 }
 
 func ParseLogLeven(stringLevel string) (slog.Level, error) {
@@ -39,6 +40,10 @@ func NewEnv() *Env {
 	if err != nil {
 		log.Fatal(err)
 	}
+	requestTimeout, err := strconv.Atoi(os.Getenv("REQUEST_TIMEOUT"))
+	if err != nil {
+		log.Fatal(err)
+	}
 	return &Env{
 		APIPath:          os.Getenv("API_PATH"),
 		PostgresUser:     os.Getenv("POSTGRES_USER"),
@@ -48,5 +53,6 @@ func NewEnv() *Env {
 		PostgresPort:     os.Getenv("POSTGRES_PORT"),
 		LogLevel:         logLevel,
 		ListLimit:        listLimit,
+		RequestTimeout:   requestTimeout,
 	}
 }

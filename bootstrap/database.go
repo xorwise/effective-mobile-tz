@@ -20,6 +20,7 @@ func CloseDatabaseConnection(conn *pgx.Conn) {
 	conn.Close(context.Background())
 }
 
+// Function for creating tables at application start
 func CreateTables(conn *pgx.Conn) error {
 	_, err := conn.Exec(context.Background(), `
 		CREATE TABLE IF NOT EXISTS cars (

@@ -21,7 +21,6 @@ type ListCarsController struct {
 }
 
 func (cc *ListCarsController) Handle(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	ctx, cancel := context.WithTimeout(r.Context(), cc.timeout)
 	defer cancel()

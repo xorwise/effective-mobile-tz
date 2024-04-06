@@ -20,6 +20,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer bootstrap.CloseDatabaseConnection(conn)
 
 	err = bootstrap.CreateTables(conn)
 	if err != nil {
@@ -27,7 +28,7 @@ func main() {
 	}
 
 	router := http.NewServeMux()
-	api.Setup(env, 10*time.Second, conn, router, logger)
+	api.Setup(env, env.RequestTimeout*time.Second, conn, router, logger)
 
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

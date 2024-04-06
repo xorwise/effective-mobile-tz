@@ -10,8 +10,10 @@ type LoggingMiddleware struct {
 	Logger *slog.Logger
 }
 
+// Logging middleware, logs every request
 func (lm LoggingMiddleware) WithLogging(next http.HandlerFunc) http.Handler {
 	logFn := func(rw http.ResponseWriter, r *http.Request) {
+		// Set CORS headers, for demo swagger test
 		rw.Header().Set("Access-Control-Allow-Origin", "*")
 		start := time.Now()
 

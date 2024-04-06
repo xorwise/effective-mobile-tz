@@ -10,6 +10,7 @@ import (
 	"github.com/xorwise/effective-mobile-tz/domain"
 )
 
+// Function for getting info about car from external api, change API_PATH in .env file
 func GetCarInfo(env *bootstrap.Env, regNum string, ctx context.Context) (*domain.Car, error) {
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/info?regNum=%s", env.APIPath, regNum), nil)
 	if err != nil {

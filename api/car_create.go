@@ -21,6 +21,7 @@ type CreateCarController struct {
 	logger  *slog.Logger
 }
 
+// POST /cars controller. creates new cars
 func (cc *CreateCarController) Handle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	ctx, cancel := context.WithTimeout(r.Context(), cc.timeout)
