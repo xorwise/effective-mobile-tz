@@ -22,13 +22,13 @@ func main() {
 	}
 	defer bootstrap.CloseDatabaseConnection(conn)
 
-	err = bootstrap.CreateTables(conn)
+	err = bootstrap.MigrateDatabase(conn)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	router := http.NewServeMux()
-	api.Setup(env, env.RequestTimeout*time.Second, conn, router, logger)
+	api.Setup(env, time.Duration(env.RequestTimeout)*time.Second, conn, router, logger)
 
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
